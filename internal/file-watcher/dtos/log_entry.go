@@ -2,6 +2,7 @@ package dtos
 
 import (
 	"fmt"
+	"reflect"
 	"time"
 )
 
@@ -29,5 +30,12 @@ type LogEntry struct {
 }
 
 func (logEntry LogEntry) String() string {
-	return fmt.Sprintf("Request from %v with status code %v through agent %v", logEntry.Address, logEntry.StatusCode, logEntry.UserAgent)
+	return fmt.Sprintf("(%s): Request from %v with status code %v through agent %v", logEntry.WhenRequestWasMade.Format(time.RFC1123Z), logEntry.Address, logEntry.StatusCode, logEntry.UserAgent)
+}
+
+func (logEntry LogEntry) Equal(logEntryArgument LogEntry) bool {
+	bothTimesAreTheSame := logEntry.WhenRequestWasMade.Format(time.RFC1123Z) == logEntryArgument.WhenRequestWasMade.Format(time.RFC1123Z)
+	// No problem at all since we're changing a copy
+	logEntry.WhenRequestWasMade = logEntryArgument.WhenRequestWasMade
+	return reflect.DeepEqual(logEntry, logEntryArgument) && bothTimesAreTheSame
 }
