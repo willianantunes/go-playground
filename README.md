@@ -4,6 +4,21 @@ Yet another playground project. This time to learn a bit of Go! Know the busines
 
 Soon I'll give you more information.
 
+## How to manage dependencies
+
+If you want to install packages:
+
+    go get -u gorm.io/gorm
+    go get -u gorm.io/driver/postgres
+
+You can know how it works with the following command:
+
+    go help get
+
+Let's say [you install a package, and you want to remove it](https://stackoverflow.com/a/57186981/3899136), given it's not being used anywhere, you can execute the command below:
+
+    go mod tidy
+
 ## Links
 
 Official:
